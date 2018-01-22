@@ -16,7 +16,11 @@ makeCacheMatrix <- function(A = matrix()) {
         A <<- y
         mat <<- NULL
     }
-    get <- function() A
+    get <- A    # Don't know why they specified the funtion() A in 
+                # in the example code, but it only causes trouble here.
+                # Simply set the get to retrieve the matrix instead. 
+                # This function is capable of calculating the inverse of
+                # a matrix with no error messages.
     setinv <- function(solve) mat <<- solve
     getinv <- function() mat
     list(set = set, get = get, 
@@ -36,8 +40,8 @@ cacheSolve <- function(A, ...) {
         message("Getting chached matrix")
         return(mat)
     }
-    data <- A$get
-    mat <- solve(data, ...)
+    data <- A$'get'
+    mat <- solve(data)
     A$setinv(mat)
     mat
 }
